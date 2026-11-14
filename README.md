@@ -14,9 +14,9 @@ Ta repozitorij vsebuje dokumentacijo celotnega sistema. Vsaka storitev je v svoj
 
 | Storitev | Repozitorij | Odgovornost | Lastnik |
 |---|---|---|---|
-| katalog | TBD | restavracije, meniji, jedi, cene, povprečne ocene | Matic Klemenc |
-| narocila | TBD | naročila, statusi, ocene | Matic Klemenc |
-| placila | TBD | simulirano plačilo naročila | Matic Klemenc |
+| katalog | [katalog](https://github.com/PRPO-projekt-dostave-hrane/katalog) | restavracije, meniji, jedi, cene, povprečne ocene | Matic Klemenc |
+| narocila | [narocila](https://github.com/PRPO-projekt-dostave-hrane/narocila) | naročila, statusi, ocene | Matic Klemenc |
+| placila | [placila](https://github.com/PRPO-projekt-dostave-hrane/placila) | simulirano plačilo naročila | Matic Klemenc |
 
 
 ## Dokumentacija
