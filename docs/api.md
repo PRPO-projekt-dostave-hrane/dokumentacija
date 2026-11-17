@@ -64,7 +64,7 @@ CAKA_NA_SPREJEM --sprejem--> SPREJETO --placilo--> PLACANO --prevzem--> V_DOSTAV
 | dostavljeno | `POST /v1/narocila/{narociloId}/dostava` | 200 | 404, 409 |
 | oceni | `POST /v1/narocila/{narociloId}/ocena` | 201 + Location | 400, 404, 409, 422 |
 
-Pri ustvarjanju naročila storitev narocila za vsako postavko pokliče `GET /v1/restavracije/{restavracijaId}/jedi/{jedId}` v katalogu in shrani ime in ceno. Če jed ne obstaja, vrne `422`, če ni na voljo, `409`.
+Pri ustvarjanju naročila storitev narocila za vsako postavko pokliče `GET /v1/restavracije/{restavracijaId}/jedi/{jedId}` v katalogu in shrani ime in ceno. Če restavracija ali jed ne obstaja, vrne `422`, če ni na voljo, `409`.
 
 Pri plačilu storitev narocila pokliče `POST /v1/placila` in k naročilu shrani ID transakcije. Če storitev placila ne odgovori, vrne `503`.
 
