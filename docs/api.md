@@ -8,20 +8,20 @@ Tukaj je načrt za API storitev katalog, narocila in placila. Je osnova za OpenA
 
 | Vir | Kanonični URI | Opis |
 |---|---|---|
-| restavracija | `/v1/restavracije/{id}` | ime, vrsta kuhinje, naslov, povprečna ocena |
-| jed | `/v1/restavracije/{id}/jedi/{id}` | ime, opis, cena, ali je na voljo |
+| restavracija | `/v1/restavracije/{restavracijaId}` | ime, vrsta kuhinje, naslov, povprečna ocena |
+| jed | `/v1/restavracije/{restavracijaId}/jedi/{jedId}` | ime, opis, cena, ali je na voljo |
 
 ### Operacije
 
 | Operacija | Metoda in URI | Uspeh | Napake |
 |---|---|---|---|
 | seznam restavracij | `GET /v1/restavracije` | 200 | 400 |
-| ena restavracija | `GET /v1/restavracije/{id}` | 200 | 404 |
-| seznam jedi (meni) restavracije | `GET /v1/restavracije/{id}/jedi` | 200 | 404 |
-| ena jed | `GET /v1/restavracije/{id}/jedi/{id}` | 200 | 404 |
-| dodaj jed v meni | `POST /v1/restavracije/{id}/jedi` | 201 + Location | 404, 422 |
-| spremeni jed (z `If-Match`) | `PATCH /v1/restavracije/{id}/jedi/{id}` | 200 | 404, 412, 422, 428 |
-| odstrani jed | `DELETE /v1/restavracije/{id}/jedi/{id}` | 204 | 404 |
+| ena restavracija | `GET /v1/restavracije/{restavracijaId}` | 200 | 404 |
+| seznam jedi (meni) restavracije | `GET /v1/restavracije/{restavracijaId}/jedi` | 200 | 404 |
+| ena jed | `GET /v1/restavracije/{restavracijaId}/jedi/{jedId}` | 200 | 404 |
+| dodaj jed v meni | `POST /v1/restavracije/{restavracijaId}/jedi` | 201 + Location | 400, 404, 422 |
+| spremeni jed (z `If-Match`) | `PATCH /v1/restavracije/{restavracijaId}/jedi/{jedId}` | 200 | 400, 404, 412, 422, 428 |
+| odstrani jed | `DELETE /v1/restavracije/{restavracijaId}/jedi/{jedId}` | 204 | 404 |
 
 ## Naročila
 
@@ -29,14 +29,14 @@ Tukaj je načrt za API storitev katalog, narocila in placila. Je osnova za OpenA
 
 | Vir | Kanonični URI | Opis |
 |---|---|---|
-| naročilo | `/v1/narocila/{id}` | podrobnosti naročila |
-| sprejem | `/v1/narocila/{id}/sprejem` | restavracija sprejme naročilo |
-| zavrnitev | `/v1/narocila/{id}/zavrnitev` | restavracija zavrne naročilo |
-| preklic | `/v1/narocila/{id}/preklic` | stranka prekliče naročilo |
-| placilo | `/v1/narocila/{id}/placilo` | stranka plača po sprejemu |
-| prevzem | `/v1/narocila/{id}/prevzem` | jed je pripravljena in na poti |
-| dostava | `/v1/narocila/{id}/dostava` | jed je prevzela stranka |
-| ocena | `/v1/narocila/{id}/ocena` | ocena 1–5 in komentar po dostavi |
+| naročilo | `/v1/narocila/{narociloId}` | podrobnosti naročila |
+| sprejem | `/v1/narocila/{narociloId}/sprejem` | restavracija sprejme naročilo |
+| zavrnitev | `/v1/narocila/{narociloId}/zavrnitev` | restavracija zavrne naročilo |
+| preklic | `/v1/narocila/{narociloId}/preklic` | stranka prekliče naročilo |
+| placilo | `/v1/narocila/{narociloId}/placilo` | stranka plača po sprejemu |
+| prevzem | `/v1/narocila/{narociloId}/prevzem` | jed je pripravljena in na poti |
+| dostava | `/v1/narocila/{narociloId}/dostava` | jed je prevzela stranka |
+| ocena | `/v1/narocila/{narociloId}/ocena` | ocena 1–5 in komentar po dostavi |
 
 ### Statusi in prehodi
 
@@ -53,18 +53,18 @@ CAKA_NA_SPREJEM --sprejem--> SPREJETO --placilo--> PLACANO --prevzem--> V_DOSTAV
 
 | Operacija | Metoda in URI | Uspeh | Napake |
 |---|---|---|---|
-| ustvari naročilo | `POST /v1/narocila` | 201 + Location | 404, 409, 422, 503 |
+| ustvari naročilo | `POST /v1/narocila` | 201 + Location | 400, 409, 422, 503 |
 | seznam naročil | `GET /v1/narocila` | 200 | 400 |
-| eno naročilo | `GET /v1/narocila/{id}` | 200 | 404 |
-| prekliči naročilo | `POST /v1/narocila/{id}/preklic` | 200 | 404, 409 |
-| zavrni naročilo | `POST /v1/narocila/{id}/zavrnitev` | 200 | 404, 409 |
-| sprejmi naročilo | `POST /v1/narocila/{id}/sprejem` | 200 | 404, 409 |
-| plačaj | `POST /v1/narocila/{id}/placilo` z `Idempotency-Key` | 200 | 400, 404, 409, 503 |
-| prevzem za dostavo | `POST /v1/narocila/{id}/prevzem` | 200 | 404, 409 |
-| dostavljeno | `POST /v1/narocila/{id}/dostava` | 200 | 404, 409 |
-| oceni | `POST /v1/narocila/{id}/ocena` | 201 + Location | 404, 409, 422 |
+| eno naročilo | `GET /v1/narocila/{narociloId}` | 200 | 404 |
+| prekliči naročilo | `POST /v1/narocila/{narociloId}/preklic` | 200 | 404, 409 |
+| zavrni naročilo | `POST /v1/narocila/{narociloId}/zavrnitev` | 200 | 404, 409 |
+| sprejmi naročilo | `POST /v1/narocila/{narociloId}/sprejem` | 200 | 404, 409 |
+| plačaj | `POST /v1/narocila/{narociloId}/placilo` z `Idempotency-Key` | 200 | 400, 404, 409, 503 |
+| prevzem za dostavo | `POST /v1/narocila/{narociloId}/prevzem` | 200 | 404, 409 |
+| dostavljeno | `POST /v1/narocila/{narociloId}/dostava` | 200 | 404, 409 |
+| oceni | `POST /v1/narocila/{narociloId}/ocena` | 201 + Location | 400, 404, 409, 422 |
 
-Pri ustvarjanju naročila storitev narocila za vsako postavko pokliče `GET /v1/restavracije/{id}/jedi/{id}` v katalogu in shrani ime in ceno. Če jed ne obstaja, vrne `404`, če ni na voljo, `409`.
+Pri ustvarjanju naročila storitev narocila za vsako postavko pokliče `GET /v1/restavracije/{restavracijaId}/jedi/{jedId}` v katalogu in shrani ime in ceno. Če restavracija ali jed ne obstaja, vrne `422`, če ni na voljo, `409`.
 
 Pri plačilu storitev narocila pokliče `POST /v1/placila` in k naročilu shrani ID transakcije. Če storitev placila ne odgovori, vrne `503`.
 
@@ -76,14 +76,14 @@ Ocena je mogoča samo za naročilo s statusom `DOSTAVLJENO` in samo enkrat. Po o
 
 | Vir | Kanonični URI | Opis |
 |---|---|---|
-| plačilo | `/v1/placila/{id}` | ID naročila, znesek, status, ID transakcije |
+| plačilo | `/v1/placila/{placiloId}` | ID naročila, znesek, status, ID transakcije |
 
 ### Operacije
 
 | Operacija | Metoda in URI | Uspeh | Napake |
 |---|---|---|---|
 | izvedi plačilo | `POST /v1/placila` z `Idempotency-Key` | 201 + Location | 400, 422 |
-| eno plačilo | `GET /v1/placila/{id}` | 200 | 404 |
+| eno plačilo | `GET /v1/placila/{placiloId}` | 200 | 404 |
 
 Plačilo je simulirano in vedno uspe. Ponovljena zahteva z istim `Idempotency-Key` ne ustvari novega plačila, ampak vrne odgovor prvega.
 
@@ -106,14 +106,14 @@ Content-Type: application/json
       "ime": "Pizzeria Napoli",
       "kuhinja": "italijanska",
       "naslov": "Italijanska ulica 23",
-      "povprecnaOcena": "4.6"
+      "povprecnaOcena": 4.6
     },
     {
       "id": "r-4",
       "ime": "Trattoria Roma",
       "kuhinja": "italijanska",
       "naslov": "Italijanska ulica 24",
-      "povprecnaOcena": "4.2"
+      "povprecnaOcena": 4.2
     }
   ]
 }
@@ -149,6 +149,7 @@ Content-Type: application/json
     {"jedId": "j-15", "ime": "Tiramisu", "cena": {"znesek": "5.00", "valuta": "EUR"}, "kolicina": 1}
   ],
   "skupaj": {"znesek": "24.00", "valuta": "EUR"},
+  "naslovDostave": "Večna pot 113, Ljubljana",
   "ustvarjeno": "2026-11-14T18:30:00Z"
 }
 ```
